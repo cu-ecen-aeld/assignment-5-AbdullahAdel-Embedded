@@ -1,14 +1,10 @@
-
 ##############################################################
 #
 # AESD-ASSIGNMENTS
 #
 ##############################################################
 
-#TODO:Fill up the contents below in order to reference your assignment 3 git contents
-AESD_ASSIGNMENTS_VERSION = 0d78f0478d4a572c60958faefe717049f7ea5e5b
-
-
+AESD_ASSIGNMENTS_VERSION = e91197020d3968f222dceb85674a1cd5464f88d7
 
 
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
@@ -22,7 +18,6 @@ define AESD_ASSIGNMENTS_BUILD_CMDS
 	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/finder-app all
 endef
 
-# TODO add your writer, finder and finder-test utilities/scripts to the installation steps below
 define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
 	$(INSTALL) -d 0755 $(@D)/conf/ $(TARGET_DIR)/etc/finder-app/conf/
 	$(INSTALL) -m 0755 $(@D)/conf/* $(TARGET_DIR)/etc/finder-app/conf/
@@ -31,9 +26,14 @@ define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 0755 $(@D)/finder-app/writer $(TARGET_DIR)/usr/bin	
 	$(INSTALL) -m 0755 $(@D)/finder-app/finder.sh $(TARGET_DIR)/usr/bin
 	$(INSTALL) -m 0755 $(@D)/finder-app/finder-test.sh $(TARGET_DIR)/usr/bin
+
+	# Install aesdsocket binary to /usr/bin
+	$(INSTALL) -m 0755 $(@D)/server/aesdsocket $(TARGET_DIR)/usr/bin
+
+	# Install aesdsocket-start-stop script to /etc/init.d/S99aesdsocket
+	$(INSTALL) -d 0755 $(TARGET_DIR)/etc/init.d/
+	$(INSTALL) -m 0755 $(@D)/server/aesdsocket-start-stop $(TARGET_DIR)/etc/init.d/S99aesdsocket
 endef
 
 $(eval $(generic-package))
-
-
 
